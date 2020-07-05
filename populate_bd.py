@@ -262,15 +262,15 @@ driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "SGBD1920"
 s = driver.session()
 
 consult = session.query(InfPes.nif,InfPes.nome)
-s.commit()
+session.commit()
 
 for x in consult:
     s.run("MERGE (:Pessoa{nif: %s, nome: '%s'})" % (x[0], str(x[1])))
 
-session.run("Merge (:Local{nome: Instituto Medico de Braganca'})")
+s.run("Merge (:Local{nome: 'Instituto Medico de Braganca'})")
 
 
-session.run("""
+s.run("""
 Match(alvaro:Pessoa{nome: 'Alvaro Chines'}), (sara:Pessoa{nome: 'Sara Manuela'}),
 (daniel:Pessoa{nome: 'Daniel Nunes'}), (claudio:Pessoa{nome: 'Claudio Mardinez'}),
 (ana:Pessoa{nome: 'Ana Rodrigues'}), (isabel:Pessoa{nome: 'Isabel Andrade'}),
